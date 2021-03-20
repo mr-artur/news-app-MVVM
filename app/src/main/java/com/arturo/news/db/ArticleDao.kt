@@ -3,7 +3,7 @@ package com.arturo.news.db
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
-import com.arturo.news.model.Article
+import com.arturo.news.models.Article
 
 @Dao
 interface ArticleDao {

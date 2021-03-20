@@ -1,4 +1,4 @@
-package com.arturo.news.model
+package com.arturo.news.models
 
 data class Source(
     val id: Any,

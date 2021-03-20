@@ -1,4 +1,4 @@
-package com.arturo.news.model
+package com.arturo.news.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

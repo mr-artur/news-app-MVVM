@@ -9,30 +9,27 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitInstance {
+object RetrofitInstance {
 
-    companion object {
+    private val retrofit by lazy {
 
-        private val retrofit by lazy {
-
-            val logging = HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            }
-
-            val client = OkHttpClient.Builder()
-                .addInterceptor(logging)
-                .addInterceptor(ApiKeyInterceptor())
-                .build()
-
-            Retrofit.Builder()
-                .baseUrl(BuildConfig.API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build()
+        val logging = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
         }
 
-        val api by lazy {
-            retrofit.create(NewsApi::class.java)
-        }
+        val client = OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .addInterceptor(ApiKeyInterceptor())
+            .build()
+
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.API_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+    }
+
+    val api by lazy {
+        retrofit.create(NewsApi::class.java)
     }
 }
