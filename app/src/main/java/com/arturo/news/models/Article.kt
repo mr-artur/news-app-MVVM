@@ -17,4 +17,6 @@ data class Article(
     val title: String,
     val url: String,
     val urlToImage: String
-)
+) {
+    fun publishedAtDate(): String = publishedAt.substring(0, 10)
+}
