@@ -25,10 +25,28 @@ class BreakingNewsFragment : BaseFragment(R.layout.fragment_breaking_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
-        subscribeOnBreakingNews()
+        subscribeOnBreakingNewsResource()
     }
 
-    private fun subscribeOnBreakingNews() {
+    private fun setUpRecyclerView() {
+        newsAdapter = NewsAdapter()
+        val dividerDrawable =
+            ResourcesCompat.getDrawable(resources, R.drawable.news_middle_divider, null)
+        rvBreakingNews.apply {
+            adapter = newsAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    activity,
+                    DividerItemDecoration.VERTICAL
+                ).apply {
+                    setDrawable(dividerDrawable!!)
+                }
+            )
+            layoutManager = LinearLayoutManager(activity)
+        }
+    }
+
+    private fun subscribeOnBreakingNewsResource() {
         viewModel.breakingNews.observe(viewLifecycleOwner, { resource ->
             when (resource) {
                 is Resource.Success -> {
@@ -56,23 +74,5 @@ class BreakingNewsFragment : BaseFragment(R.layout.fragment_breaking_news) {
 
     private fun hideProgressBar() {
         paginationProgressBar.hide()
-    }
-
-    private fun setUpRecyclerView() {
-        newsAdapter = NewsAdapter()
-        val dividerDrawable =
-            ResourcesCompat.getDrawable(resources, R.drawable.news_middle_divider, null)
-        rvBreakingNews.apply {
-            adapter = newsAdapter
-            addItemDecoration(
-                DividerItemDecoration(
-                    activity,
-                    DividerItemDecoration.VERTICAL
-                ).apply {
-                    setDrawable(dividerDrawable!!)
-                }
-            )
-            layoutManager = LinearLayoutManager(activity)
-        }
     }
 }
