@@ -3,6 +3,7 @@ package com.arturo.news.ui.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arturo.news.models.Article
 
 import com.arturo.news.models.NewsResponse
 import com.arturo.news.repositories.NewsRepository
@@ -30,6 +31,16 @@ class NewsViewModel(
         searchNews.postValue(Resource.Loading())
         val response = newsRepository.searchNews(searchQuery, searchNewsPage)
         searchNews.postValue(handleSearchNewsResponse(response))
+    }
+
+    fun saveArticle(article: Article) = viewModelScope.launch {
+        newsRepository.upsertArticle(article)
+    }
+
+    fun getSavedNews() = newsRepository.getSavedNews()
+
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        newsRepository.deleteArticle(article)
     }
 
     private fun getBreakingNews(countryCode: String) = viewModelScope.launch {
