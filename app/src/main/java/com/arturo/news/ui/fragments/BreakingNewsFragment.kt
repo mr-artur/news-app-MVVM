@@ -3,9 +3,10 @@ package com.arturo.news.ui.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.content.res.ResourcesCompat
-import androidx.recyclerview.widget.DividerItemDecoration
 
+import androidx.core.content.res.ResourcesCompat
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.arturo.news.R
@@ -24,12 +25,20 @@ class BreakingNewsFragment : BaseFragment(R.layout.fragment_breaking_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpAdapter()
         setUpRecyclerView()
         subscribeOnBreakingNewsResource()
     }
 
-    private fun setUpRecyclerView() {
+    private fun setUpAdapter() {
         newsAdapter = NewsAdapter()
+        newsAdapter.setOnItemClickListener {
+            val action = BreakingNewsFragmentDirections.fromBreakingNewsToArticle(it)
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun setUpRecyclerView() {
         val dividerDrawable =
             ResourcesCompat.getDrawable(resources, R.drawable.news_middle_divider, null)
         rvBreakingNews.apply {

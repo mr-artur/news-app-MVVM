@@ -6,6 +6,7 @@ import android.view.View
 
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -27,13 +28,21 @@ class SearchNewsFragment : BaseFragment(R.layout.fragment_search_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpAdapter()
         setUpRecyclerView()
         subscribeOnEtSearchTextChanges()
         subscribeOnSearchNewsResource()
     }
 
-    private fun setUpRecyclerView() {
+    private fun setUpAdapter() {
         newsAdapter = NewsAdapter()
+        newsAdapter.setOnItemClickListener {
+            val action = SearchNewsFragmentDirections.fromSearchNewsToArticle(it)
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun setUpRecyclerView() {
         val dividerDrawable =
             ResourcesCompat.getDrawable(resources, R.drawable.news_middle_divider, null)
         rvSearchNews.apply {
