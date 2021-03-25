@@ -7,4 +7,6 @@
     <string name="bottom_navigation_search_news">Search News</string>
 
     <string name="search_news_hint">Search…</string>
+
+    <string name="action_undo">Undo</string>
 </resources>
